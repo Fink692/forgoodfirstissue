@@ -3,9 +3,7 @@ name: Check pull request
 on: [push, pull_request]
 
 permissions:
-  actions: write
   contents: read
-  pages: write
 
 jobs:
   # Build job
@@ -19,14 +17,6 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-        with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: next
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -43,7 +33,3 @@ jobs:
         run: npm run build
         env:
           GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          path: ./out
